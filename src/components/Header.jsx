@@ -1,7 +1,9 @@
 import React from "react";
 
 const Header = () => {
-  return <div>Header</div>;
+  return <header className="w-full items-center flex">
+<div className="flex-1"></div>
+  </header>;
 };
 
 export default Header;
