@@ -7,8 +7,6 @@ body {
     /* font-family: 'IBM Plex Sans', sans-serif!important; */
     margin: 0;
     padding: 0;
-    background: #111;
-    color: #fff;
 }
 *::selection{
     background: #d21dd3;
