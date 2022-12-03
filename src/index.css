@@ -10,14 +10,6 @@ body {
     background: #111;
     color: #fff;
 }
-
-select,
-button {
-    outline: none;
-}
-
-select,
-button:focus {
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(96 165 250 / var(--tw-ring-opacity));
+*::selection{
+    background: #d21dd3;
 }

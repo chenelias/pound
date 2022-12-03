@@ -1,7 +1,9 @@
 import React from 'react'
 import { AiOutlineSetting } from 'react-icons/ai'
 const Header = ({ settingActive, setSettingActive }) => {
+    
     return (
+        
         <header className="fixed w-full backdrop-blur-lg py-3 px-5 z-30">
             <div className=" mx-auto max-w-6xl flex">
                 <h1 className="font-ibm font-bold text-2xl">

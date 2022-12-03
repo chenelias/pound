@@ -15,11 +15,12 @@ const SettingMenu = ({ settingActive, setSettingActive }) => {
             key: 'system',
         },
     ]
+    
     return (
         <div className={`${settingActive ? 'block' : 'hidden'} transition-all duration-200`}>
-            <div className={`absolute   z-20 h-[100%] w-[100%] backdrop-blur-lg`}>
+            <div className={`absolute z-20 h-[100%] w-[100%] backdrop-blur-lg `}>
                 <div className="z-21 absolute items-center mx-auto h-[100%] w-[100%] justify-center flex">
-                    <div className="bg-slate-800 rounded-md w-[400px]">
+                    <div className="bg-slate-800 rounded-md w-[400px] m-3   ">
                         <div className="p-2 flex items-center">
                             <p className="text-xl font-bold">Setting</p>
                             <div className="flex-1" />
