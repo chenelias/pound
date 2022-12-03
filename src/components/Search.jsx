@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { GoSearch } from 'react-icons/go'
 import { BsTrash } from 'react-icons/bs'
 import Clock from 'react-live-clock'
-const search = ({ searchengin }) => {
+const search = ({ searchengin, background }) => {
     const [searchInput, setSearchInput] = useState('')
     function Search(event) {
         if (event.key === 'Enter') {
@@ -16,9 +16,18 @@ const search = ({ searchengin }) => {
         document.querySelector('.searchinput').value = ''
         setSearchInput('')
     }
-
+    useEffect(() => {
+        if (background !== '') {
+            document.querySelector('#searchbody').style.backgroundColor = background
+        } else {
+            document.querySelector('#searchbody').style.backgroundColor = ''
+        }
+    }, [background])
     return (
-        <div className="absolute items-center mx-auto z-10 dark:bg-[#111111] bg-[#f9fafb] dark:text-white text-black h-[100%] w-[100%] justify-center flex">
+        <div
+            id="searchbody"
+            className={`absolute items-center mx-auto z-10 dark:bg-[#111] bg-[#f9fafb] dark:text-white text-black h-[100%] w-[100%] justify-center flex`}
+        >
             <div className="!block">
                 <div className="backdrop-blur-lg rounded-md p-4 items-center mx-auto mb-4">
                     <Clock
@@ -39,7 +48,7 @@ const search = ({ searchengin }) => {
                                 ? `https://www.google.com/search?q=${searchInput}`
                                 : `https://duckduckgo.com/?q=${searchInput}`
                         }
-                        className="text-2xl absolute ml-2 text-black p-2 rounded-md  dark:text-white"
+                        className=" outline-none focus:ring-[2px] ring-blue-500 text-2xl absolute ml-2 text-black p-2 rounded-md  dark:text-white"
                     >
                         <GoSearch />
                     </a>

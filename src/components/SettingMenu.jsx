@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
-const SettingMenu = ({ settingActive, setSettingActive, setsearchengin, searchengin }) => {
+import { BsTrash } from 'react-icons/bs'
+import { ChromePicker } from 'react-color'
+const SettingMenu = ({ settingActive, setSettingActive, setsearchengin, searchengin, setbackground, background }) => {
     const useLocalStorage = (keyName, defaultValue) => {
         const [storedValue, setStoredValue] = React.useState(() => {
             try {
@@ -60,17 +62,6 @@ const SettingMenu = ({ settingActive, setSettingActive, setsearchengin, searchen
         } else {
         }
     }, [])
-    // function loadsystheme() {
-    //     if (systheme) {
-    //         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    //             setTheme('dark')
-    //         } else {
-    //             setTheme('light')
-    //         }
-    //     } else {
-    //     }
-    // }
-    // window.addEventListener('load', loadsystheme())
     const ColorThemeList = [
         {
             content: 'Light',
@@ -107,6 +98,20 @@ const SettingMenu = ({ settingActive, setSettingActive, setsearchengin, searchen
             setsystheme(false)
             setTheme(select)
         }
+    }
+    useEffect(() => {
+        document.querySelector('#hexinput').value = background
+    }, [background])
+    useEffect(() => {
+        document.querySelector('#browsercolorinput').value = background
+    }, [background])
+    function colorinputonchange(x) {
+        setbackground(x)
+        document.querySelector('#hexinput').value = background
+    }
+    function backgroundcolorclear() {
+        setbackground('')
+        document.querySelector('#hexinput').value = ''
     }
     return (
         <div className={`${settingActive ? 'block' : 'hidden'} transition-all duration-200`}>
@@ -153,6 +158,30 @@ const SettingMenu = ({ settingActive, setSettingActive, setsearchengin, searchen
                                     </option>
                                 ))}
                             </select>
+                        </div>
+                        <div className="p-2 flex text-md items-center ">
+                            <p>Background</p>
+                            <div className="flex-1" />
+                            <button
+                                onClick={backgroundcolorclear}
+                                className="outline-none focus:ring-2 ring-blue-500 text-xl text-red-600 mx-1 p-2 bg-gray-200 dark:bg-slate-700 rounded-md"
+                            >
+                                <BsTrash />
+                            </button>
+                            <input
+                                type="text"
+                                placeholder="#"
+                                id="hexinput"
+                                onChange={(x) => setbackground(x.target.value)}
+                                className="text-lg outline-none focus:ring-2 ring-blue-500 bg-gray-200 dark:bg-slate-700 px-2 py-1 rounded-md w-[100px]"
+                            />
+                            <input
+                                type="color"
+                                onChange={(x) => colorinputonchange(x.target.value)}
+                                value={background}
+                                id="browsercolorinput"
+                                className="text-lg outline-none focus:ring-2 rounded-md ml-1 bg-gray-200 dark:bg-slate-700 px-1 w-10 h-9"
+                            />
                         </div>
                     </div>
                 </div>

@@ -30,12 +30,15 @@ const App = ({ props }) => {
 
         return [storedValue, setValue]
     }
+    const [background, setbackground] = useLocalStorage('backgroundcolor', '') //* setbackground={setbackground} background = { background }
     const [settingActive, setSettingActive] = useState(false) //* setSettingActive={setSettingActive} settingActive={settingActive}
     const [searchengin, setsearchengin] = useLocalStorage('searchengin', 'google') //* google,duckduckgo // searchengin={searchengin} setsearchengin = { setsearchengin }
 
     return (
         <main className="">
             <SettingMenu
+                setbackground={setbackground}
+                background={background}
                 searchengin={searchengin}
                 setsearchengin={setsearchengin}
                 setSettingActive={setSettingActive}
@@ -43,7 +46,12 @@ const App = ({ props }) => {
             />
             <Header setSettingActive={setSettingActive} settingActive={settingActive} />
             <div></div>
-            <Search searchengin={searchengin} setsearchengin={setsearchengin} />
+            <Search
+                searchengin={searchengin}
+                setbackground={setbackground}
+                background={background}
+                setsearchengin={setsearchengin}
+            />
             <Footer />
         </main>
     )
