@@ -39,13 +39,13 @@ const search = ({ searchengin }) => {
                                 ? `https://www.google.com/search?q=${searchInput}`
                                 : `https://duckduckgo.com/?q=${searchInput}`
                         }
-                        className="text-2xl absolute ml-2 text-black dark:text-white"
+                        className="text-2xl absolute ml-2 text-black p-2 rounded-md  dark:text-white"
                     >
                         <GoSearch />
                     </a>
                     <input
                         type="text"
-                        className="searchinput border-[2px] dark:border-white  dark:bg-slate-700 bg-gray-300 outline-none focus:ring-blue-400 focus:ring-[4px] duration-100  p-2 pl-[40px] text-2xl searchbox:text-3xl w-full searchbox:w-[800px] text-black dark:text-white  rounded-xl"
+                        className="searchinput border-[2px] dark:border-white  dark:bg-slate-700 bg-gray-300 outline-none focus:ring-blue-400 focus:ring-[4px] duration-100 p-2 pl-[50px] text-2xl searchbox:text-3xl w-full searchbox:w-[800px] text-black dark:text-white  rounded-xl"
                         placeholder={`Search ${'on ' + searchengin}`}
                         onKeyPress={(e) => e.key === 'Enter' && Search(e)}
                         onChange={(x) => setSearchInput(x.target.value)}
