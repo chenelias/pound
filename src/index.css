@@ -8,6 +8,15 @@ body {
     margin: 0;
     padding: 0;
 }
-*::selection{
+
+*::selection {
     background: #d21dd3;
+}
+
+#searchbody {
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    position: fixed;
 }

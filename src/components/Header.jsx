@@ -2,10 +2,10 @@ import React from 'react'
 import { AiOutlineSetting } from 'react-icons/ai'
 const Header = ({ settingActive, setSettingActive }) => {
     return (
-        <header className="fixed w-full backdrop-blur-lg py-2 px-5 z-30">
+        <header className="fixed w-full backdrop-blur-xl py-2 px-5 z-30  dark:!bg-[rgba(17, 17, 17,0.29)] !bg-[rgba(249, 250, 251,0.30)]">
             <div className=" mx-auto max-w-6xl flex">
                 <a href="/">
-                    <h1 className=" outline-none focus:ring-[2px] ring-blue-500 select-none font-ibm font-bold text-2xl group hover:dark:bg-white hover:bg-black  p-1 text-dark dark:text-white hover:dark:text-black hover:text-white cursor-pointer transition-all">
+                    <h1 className=" outline-none focus:ring-[2px] ring-blue-500 select-none font-ibm font-bold text-2xl group hover:dark:bg-white hover:bg-black  p-1 text-dark dark:text-white hover:dark:text-black hover:text-white cursor-pointer transition-all ">
                         <span className="text-3xl ">+</span>Pound
                     </h1>
                 </a>

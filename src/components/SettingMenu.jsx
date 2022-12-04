@@ -2,7 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { BsTrash } from 'react-icons/bs'
 import { ChromePicker } from 'react-color'
-const SettingMenu = ({ settingActive, setSettingActive, setsearchengin, searchengin, setbackground, background }) => {
+import { GrPowerReset } from 'react-icons/gr'
+const SettingMenu = ({
+    settingActive,
+    setSettingActive,
+    setsearchengin,
+    searchengin,
+    setbackground,
+    background,
+    backgroundImage,
+    setBackgroundImage,
+}) => {
     const useLocalStorage = (keyName, defaultValue) => {
         const [storedValue, setStoredValue] = React.useState(() => {
             try {
@@ -113,11 +123,24 @@ const SettingMenu = ({ settingActive, setSettingActive, setsearchengin, searchen
         setbackground('')
         document.querySelector('#hexinput').value = ''
     }
+    function backtodefault() {
+        var yes = confirm('Back to default setting\nAre you sure?')
+
+        if (yes) {
+            localStorage.clear()
+            location.reload()
+        } else {
+        }
+    }
+    useEffect(() => {
+        setBackgroundImage(null)
+        document.querySelector('#fileinputbox').value=''
+    }, [background])
     return (
         <div className={`${settingActive ? 'block' : 'hidden'} transition-all duration-200`}>
             <div className={`absolute z-20 h-[100%] w-[100%] backdrop-blur-lg `}>
                 <div className="z-21 absolute items-center mx-auto h-[100%] w-[100%] justify-center flex">
-                    <div className="dark:bg-slate-800 bg-slate-100 rounded-md w-[400px] m-3 drop-shadow-xl text-black dark:text-white">
+                    <div className="dark:bg-slate-800 bg-slate-100 rounded-md w-[400px] m-3 drop-shadow-xl text-black dark:text-white ">
                         <div className="p-2 flex items-center">
                             <p className="text-2xl font-bold font-ibm">Setting</p>
                             <div className="flex-1" />
@@ -164,7 +187,7 @@ const SettingMenu = ({ settingActive, setSettingActive, setsearchengin, searchen
                             <div className="flex-1" />
                             <button
                                 onClick={backgroundcolorclear}
-                                className="outline-none focus:ring-2 ring-blue-500 text-xl text-red-600 mx-1 p-2 bg-gray-200 dark:bg-slate-700 rounded-md"
+                                className="outline-none focus:ring-2 ring-blue-500 text-xl text-red-600 dark:text-white  mx-1 p-2 bg-gray-200 dark:bg-slate-700 rounded-md"
                             >
                                 <BsTrash />
                             </button>
@@ -182,6 +205,32 @@ const SettingMenu = ({ settingActive, setSettingActive, setsearchengin, searchen
                                 id="browsercolorinput"
                                 className="text-lg outline-none focus:ring-2 rounded-md ml-1 bg-gray-200 dark:bg-slate-700 px-1 w-10 h-9"
                             />
+                        </div>
+                        <div className="p-2 block text-md items-center ">
+                            <p>Background Image</p>
+                            <input
+                                type="file"
+                                id='fileinputbox'
+                                onChange={(x) => setBackgroundImage(URL.createObjectURL(x.target.files[0]))}
+                                className="w-full mt-2 text-md outline-none focus:ring-2 ring-blue-500 bg-gray-200 dark:bg-slate-700 px-2 py-1 rounded-md placeholder-slate-700"
+                            />
+                        </div>
+                        {backgroundImage && (
+                            <div className="p-1">
+                                <img
+                                    src={backgroundImage}
+                                    className="rounded-md border-[1px] border-black dark:border-white"
+                                    alt="User upload image"
+                                />
+                            </div>
+                        )}
+                        <div className="p-3 mt-2">
+                            <button
+                                onClick={() => backtodefault()}
+                                className="text-lg p-1 font-bold text-center w-full outline-none focus:ring-2 ring-blue-500 bg-red-600 duration-100 hover:bg-gradient-to-t from-red-700 to-red-600 text-white items-center rounded-md"
+                            >
+                                Back to default settings
+                            </button>
                         </div>
                     </div>
                 </div>
