@@ -116,6 +116,7 @@ const SettingMenu = ({
         document.querySelector('#browsercolorinput').value = background
     }, [background])
     function colorinputonchange(x) {
+        setBackgroundImage(null)
         setbackground(x)
         document.querySelector('#hexinput').value = background
     }
@@ -125,7 +126,6 @@ const SettingMenu = ({
     }
     function backtodefault() {
         var yes = confirm('Back to default setting\nAre you sure?')
-
         if (yes) {
             localStorage.clear()
             location.reload()
@@ -133,105 +133,151 @@ const SettingMenu = ({
         }
     }
     useEffect(() => {
-        setBackgroundImage(null)
-        document.querySelector('#fileinputbox').value=''
+        // setBackgroundImage(null)
+        document.querySelector('#fileinputbox').value = ''
     }, [background])
+    function fileInput(x) {
+        // const file = x.files[0]
+        // const fr = new FileReader()
+        // fr.readAsDataURL(file)
+        // const url = fr.result
+        // const img = new Image()
+        // console.log(url);
+        // img.src = url
+        // setBackgroundImage(url)
+        setBackgroundImage(URL.createObjectURL(x.target.files[0]))
+        document.querySelector('#hexinput').value = null
+        setbackground('')
+    }
     return (
-        <div className={`${settingActive ? 'block' : 'hidden'} transition-all duration-200`}>
-            <div className={`absolute z-20 h-[100%] w-[100%] backdrop-blur-lg `}>
-                <div className="z-21 absolute items-center mx-auto h-[100%] w-[100%] justify-center flex">
-                    <div className="dark:bg-slate-800 bg-slate-100 rounded-md w-[400px] m-3 drop-shadow-xl text-black dark:text-white ">
-                        <div className="p-2 flex items-center">
-                            <p className="text-2xl font-bold font-ibm">Setting</p>
-                            <div className="flex-1" />
-                            <button
-                                onClick={() => setSettingActive(false)}
-                                className=" p-2 rounded-full bg-slate-300 hover:bg-slate-400 dark:bg-slate-900 dark:hover:bg-slate-700 duration-100 outline-none focus:ring-2 ring-blue-500"
+        <div className={`${settingActive ? 'block' : 'hidden'} transition-all duration-200 h-[100%]`}>
+            <div
+                className={`fixed z-20 h-[100%] w-[100%] backdrop-blur-lg overflow-auto flex justify-center !pt-[100px] items-center`}
+            >
+                {/* <div className="h-[60px]"></div> */}
+                <div
+                    id="windowsetting"
+                    className=" dark:bg-slate-800 absoult bg-slate-100 rounded-md w-[400px] m-3 drop-shadow-xl text-black dark:text-white overflow-y"
+                >
+                    <div className="p-2 flex items-center">
+                        <p className="text-2xl font-bold font-ibm">Setting</p>
+                        <div className="flex-1" />
+                        <button
+                            onClick={() => setSettingActive(false)}
+                            className=" p-2 rounded-full bg-slate-300 hover:bg-slate-400 dark:bg-slate-900 dark:hover:bg-slate-700 duration-100 outline-none focus:ring-2 ring-blue-500"
+                        >
+                            <IoClose />
+                        </button>
+                    </div>
+                    <hr />
+                    <div className="p-2 mt-1 flex text-md items-center ">
+                        <p>Color theme</p>
+                        <div className="flex-1" />
+                        <select
+                            value={systheme ? 'system' : theme}
+                            onChange={(x) => ToggleTheme(x.target.value)}
+                            className="text-black bg-gray-200 dark:text-white p-2 font-medium rounded-md dark:bg-slate-700 outline-none focus:ring-2 ring-blue-500 duration-100"
+                        >
+                            {ColorThemeList.map((option) => (
+                                <option key={option.key} value={option.key}>
+                                    {option.content}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="p-2 flex text-md items-center ">
+                        <p>Search engine</p>
+                        <div className="flex-1" />
+                        <select
+                            onChange={(x) => setsearchengin(x.target.value)}
+                            value={searchengin}
+                            className="text-black bg-gray-200 dark:text-white p-2 font-medium rounded-md dark:bg-slate-700 outline-none focus:ring-2 ring-blue-500 duration-100"
+                        >
+                            {searchengine.map((option) => (
+                                <option key={option.key} value={option.key}>
+                                    {option.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="p-2 flex text-md items-center ">
+                        <p>Background</p>
+                        <div className="flex-1" />
+                        <button
+                            onClick={backgroundcolorclear}
+                            className="outline-none focus:ring-2 ring-blue-500 text-xl text-red-600 dark:text-white  mx-1 p-2 bg-gray-200 dark:bg-slate-700 rounded-md"
+                        >
+                            <BsTrash />
+                        </button>
+                        <input
+                            type="text"
+                            placeholder="#"
+                            id="hexinput"
+                            onChange={(x) => setbackground(x.target.value)}
+                            className="text-lg outline-none focus:ring-2 ring-blue-500 bg-gray-200 dark:bg-slate-700 px-2 py-1 rounded-md w-[100px]"
+                        />
+                        <input
+                            type="color"
+                            onChange={(x) => colorinputonchange(x.target.value)}
+                            value={background}
+                            id="browsercolorinput"
+                            className="text-lg outline-none focus:ring-2 rounded-md ml-1 bg-gray-200 dark:bg-slate-700 px-1 w-10 h-9"
+                        />
+                    </div>
+                    <div className="p-2 block text-md items-center ">
+                        <p>Background Image</p>
+
+                        <div class="flex items-center justify-center w-full mt-1 mx-auto ">
+                            <label
+                                for="fileinputbox"
+                                class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 h-[130px] "
                             >
-                                <IoClose />
-                            </button>
-                        </div>
-                        <hr />
-                        <div className="p-2 mt-1 flex text-md items-center ">
-                            <p>Color theme</p>
-                            <div className="flex-1" />
-                            <select
-                                value={systheme ? 'system' : theme}
-                                onChange={(x) => ToggleTheme(x.target.value)}
-                                className="text-black bg-gray-200 dark:text-white p-2 font-medium rounded-md dark:bg-slate-700 outline-none focus:ring-2 ring-blue-500 duration-100"
-                            >
-                                {ColorThemeList.map((option) => (
-                                    <option key={option.key} value={option.key}>
-                                        {option.content}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="p-2 flex text-md items-center ">
-                            <p>Search engine</p>
-                            <div className="flex-1" />
-                            <select
-                                onChange={(x) => setsearchengin(x.target.value)}
-                                value={searchengin}
-                                className="text-black bg-gray-200 dark:text-white p-2 font-medium rounded-md dark:bg-slate-700 outline-none focus:ring-2 ring-blue-500 duration-100"
-                            >
-                                {searchengine.map((option) => (
-                                    <option key={option.key} value={option.key}>
-                                        {option.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="p-2 flex text-md items-center ">
-                            <p>Background</p>
-                            <div className="flex-1" />
-                            <button
-                                onClick={backgroundcolorclear}
-                                className="outline-none focus:ring-2 ring-blue-500 text-xl text-red-600 dark:text-white  mx-1 p-2 bg-gray-200 dark:bg-slate-700 rounded-md"
-                            >
-                                <BsTrash />
-                            </button>
-                            <input
-                                type="text"
-                                placeholder="#"
-                                id="hexinput"
-                                onChange={(x) => setbackground(x.target.value)}
-                                className="text-lg outline-none focus:ring-2 ring-blue-500 bg-gray-200 dark:bg-slate-700 px-2 py-1 rounded-md w-[100px]"
-                            />
-                            <input
-                                type="color"
-                                onChange={(x) => colorinputonchange(x.target.value)}
-                                value={background}
-                                id="browsercolorinput"
-                                className="text-lg outline-none focus:ring-2 rounded-md ml-1 bg-gray-200 dark:bg-slate-700 px-1 w-10 h-9"
-                            />
-                        </div>
-                        <div className="p-2 block text-md items-center ">
-                            <p>Background Image</p>
-                            <input
-                                type="file"
-                                id='fileinputbox'
-                                onChange={(x) => setBackgroundImage(URL.createObjectURL(x.target.files[0]))}
-                                className="w-full mt-2 text-md outline-none focus:ring-2 ring-blue-500 bg-gray-200 dark:bg-slate-700 px-2 py-1 rounded-md placeholder-slate-700"
-                            />
-                        </div>
-                        {backgroundImage && (
-                            <div className="p-1">
-                                <img
-                                    src={backgroundImage}
-                                    className="rounded-md border-[1px] border-black dark:border-white"
-                                    alt="User upload image"
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <svg
+                                        aria-hidden="true"
+                                        class="w-10 h-10 mb-3 text-gray-400"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                        ></path>
+                                    </svg>
+                                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                        <span class="font-semibold">Click to upload</span> or drag and drop
+                                    </p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG, JEPG</p>
+                                </div>
+                                <input
+                                    type="file"
+                                    id="fileinputbox"
+                                    onChange={(x) => fileInput(x)}
+                                    className="outline-none focus:ring-2 ring-blue-500hidden"
                                 />
-                            </div>
-                        )}
-                        <div className="p-3 mt-2">
-                            <button
-                                onClick={() => backtodefault()}
-                                className="text-lg p-1 font-bold text-center w-full outline-none focus:ring-2 ring-blue-500 bg-red-600 duration-100 hover:bg-gradient-to-t from-red-700 to-red-600 text-white items-center rounded-md"
-                            >
-                                Back to default settings
-                            </button>
+                            </label>
                         </div>
+                    </div>
+                    {backgroundImage && (
+                        <div className="p-1">
+                            <img
+                                src={backgroundImage}
+                                className="max-h-[150px] mx-auto w-auto rounded-md border-[1px] border-black dark:border-white"
+                                alt="User upload image"
+                            />
+                        </div>
+                    )}
+                    <div className="p-3 mt-2">
+                        <button
+                            onClick={() => backtodefault()}
+                            className="text-lg p-1 font-bold text-center w-full outline-none focus:ring-2 ring-blue-500 bg-red-600 duration-100 hover:bg-gradient-to-t from-red-700 to-red-600 text-white items-center rounded-md"
+                        >
+                            Back to default settings
+                        </button>
                     </div>
                 </div>
             </div>

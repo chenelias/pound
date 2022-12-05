@@ -20,12 +20,10 @@ const search = ({ searchengin, background, backgroundImage, setBackgroundImage }
         if (backgroundImage !== null) {
             document.querySelector('#searchbody').style.backgroundImage = `url("${backgroundImage}")`
         } else {
-            document.querySelector('#searchbody').style.backgroundImage = null
         }
     }, [backgroundImage])
     useEffect(() => {
         if (background !== '') {
-            setBackgroundImage(null)
             document.querySelector('#searchbody').style.backgroundColor = background
         } else {
             document.querySelector('#searchbody').style.backgroundColor = ''
@@ -70,9 +68,8 @@ const search = ({ searchengin, background, backgroundImage, setBackgroundImage }
                         </a>
                         <input
                             id="searchinput"
-                            
                             type="text"
-                            className="searchinput border-[2px] dark:border-white  dark:bg-slate-700 bg-gray-300 outline-none focus:ring-blue-400 focus:ring-[4px] duration-100 p-2 pl-[50px] text-2xl searchbox:text-3xl w-full searchbox:w-[800px] text-black dark:text-white  rounded-xl"
+                            className="searchinput border-[2px] dark:border-white  dark:bg-slate-700 bg-gray-100 outline-none focus:ring-blue-400 focus:ring-[4px] duration-100 p-2 pl-[50px] text-2xl searchbox:text-3xl w-full searchbox:w-[800px] text-black dark:text-white  rounded-xl"
                             placeholder={`Search ${'on ' + searchengin}`}
                             onKeyPress={(e) => e.key === 'Enter' && Search(e)}
                             onChange={(x) => setSearchInput(x.target.value)}
@@ -82,7 +79,7 @@ const search = ({ searchengin, background, backgroundImage, setBackgroundImage }
                                 onClick={searchclear}
                                 className={`relative ${
                                     searchInput !== '' ? 'block' : 'hidden'
-                                } !right-[50px] clearbutton text-2xl outline-none focus:ring-[3px] ring-blue-600 text-red-500 p-1 hover:bg-red-200 dark:hover:bg-red-300 duration-200 active:text-red-700 rounded-lg ml-2 `}
+                                } !right-[50px] clearbutton text-2xl outline-none focus:ring-[3px] ring-blue-600 text-red-600 p-1 hover:bg-red-300 dark:hover:bg-red-500 duration-200 dark:text-white active:text-red-700 rounded-lg ml-2 `}
                             >
                                 <BsTrash />
                             </button>
