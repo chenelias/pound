@@ -145,13 +145,10 @@ const SettingMenu = ({
         // console.log(url);
         // img.src = url
         // setBackgroundImage(url)
-        setBackgroundImage(x.target.files[0])
+        setBackgroundImage(URL.createObjectURL(x.target.files[0]))
         document.querySelector('#hexinput').value = null
         setbackground('')
     }
-    useEffect(() => {
-        document.cookie = 'bgimage=backgroundImage'
-    }, [backgroundImage])
     return (
         <div className={`${settingActive ? 'block' : 'hidden'} transition-all duration-200 h-[100%]`}>
             <div
@@ -227,10 +224,11 @@ const SettingMenu = ({
                             className="text-lg outline-none focus:ring-2 rounded-md ml-1 bg-gray-200 dark:bg-slate-700 px-1 w-10 h-9"
                         />
                     </div>
-                    {/* <div className="p-2 block text-md items-center ">
+                    <div className="p-2 block text-md items-center ">
                         <p>Background Image</p>
                         <div className="flex flex-col mt-1 items-center justify-center w-full h-[120px] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                             <div className="absolute rounded-md items-center">
+                              
                                 <p className="text-center text-md">
                                     <span className="font-medium">Click</span> to upload
                                     <br />
@@ -248,8 +246,8 @@ const SettingMenu = ({
                                 className="cursor-pointer opacity-0 !h-[120px] w-full rounded-md "
                             />
                         </div>
-                    </div> */}
-                    {/* {backgroundImage && (
+                    </div>
+                    {backgroundImage && (
                         <div className="p-1">
                             <img
                                 src={backgroundImage}
@@ -257,7 +255,7 @@ const SettingMenu = ({
                                 alt="User upload image"
                             />
                         </div>
-                    )} */}
+                    )}
                     <div className="p-3 mt-2">
                         <button
                             onClick={() => backtodefault()}
