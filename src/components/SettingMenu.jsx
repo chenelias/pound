@@ -3,6 +3,8 @@ import { IoClose } from 'react-icons/io5'
 import { BsTrash } from 'react-icons/bs'
 import { ChromePicker } from 'react-color'
 import { GrPowerReset } from 'react-icons/gr'
+import { exportImage } from '../image/exportImage'
+
 const SettingMenu = ({
     settingActive,
     setSettingActive,
@@ -38,6 +40,7 @@ const SettingMenu = ({
         return [storedValue, setValue]
     }
     /////////////////////////
+
     function useDarkMode() {
         const [theme, setTheme] = useState(
             typeof window !== 'undefined'
@@ -95,6 +98,10 @@ const SettingMenu = ({
             name: 'Duckduckgo',
             key: 'duckduckgo',
         },
+        {
+            name: 'Yahoo',
+            key: 'yahoo',
+        },
     ]
     function ToggleTheme(select) {
         if (select === 'system') {
@@ -133,21 +140,13 @@ const SettingMenu = ({
         }
     }
     useEffect(() => {
-        // setBackgroundImage(null)
+        setBackgroundImage(null)
         document.querySelector('#fileinputbox').value = ''
     }, [background])
     function fileInput(x) {
-        // const file = x.files[0]
-        // const fr = new FileReader()
-        // fr.readAsDataURL(file)
-        // const url = fr.result
-        // const img = new Image()
-        // console.log(url);
-        // img.src = url
-        // setBackgroundImage(url)
-        setBackgroundImage(URL.createObjectURL(x.target.files[0]))
+        setBackgroundImage(x)
         document.querySelector('#hexinput').value = null
-        setbackground('')
+        // setbackground('')
     }
     return (
         <div className={`${settingActive ? 'block' : 'hidden'} transition-all duration-200 h-[100%]`}>
@@ -224,38 +223,55 @@ const SettingMenu = ({
                             className="text-lg outline-none focus:ring-2 rounded-md ml-1 bg-gray-200 dark:bg-slate-700 px-1 w-10 h-9"
                         />
                     </div>
-                    <div className="p-2 block text-md items-center ">
-                        <p>Background Image</p>
-                        <div className="flex flex-col mt-1 items-center justify-center w-full h-[120px] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                            <div className="absolute rounded-md items-center">
-                              
-                                <p className="text-center text-md">
-                                    <span className="font-medium">Click</span> to upload
-                                    <br />
-                                    or
-                                    <br />
-                                    <span className="font-medium">drop</span> and{' '}
-                                    <span className="font-medium">drop</span>
-                                </p>
+                    <div className="hidden">
+                        <div className="p-2 block text-md items-center ">
+                            <p>Background Image</p>
+                            <div className="flex flex-col mt-1 items-center justify-center w-full h-[120px] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <div className="absolute rounded-md items-center">
+                                    <p className="text-center text-md">
+                                        <span className="font-medium">Click</span> to upload
+                                        <br />
+                                        or
+                                        <br />
+                                        <span className="font-medium">drop</span> and{' '}
+                                        <span className="font-medium">drop</span>
+                                    </p>
+                                </div>
+                                <input
+                                    type="file"
+                                    id="fileinputbox"
+                                    name="fileinputbox"
+                                    onChange={(x) => fileInput(x)}
+                                    className="cursor-pointer opacity-0 !h-[120px] w-full rounded-md "
+                                />
                             </div>
-                            <input
-                                type="file"
-                                id="fileinputbox"
-                                name="fileinputbox"
-                                onChange={(x) => fileInput(x)}
-                                className="cursor-pointer opacity-0 !h-[120px] w-full rounded-md "
-                            />
                         </div>
+
+                        {backgroundImage && (
+                            <div className="p-1">
+                                <img
+                                    src={backgroundImage}
+                                    className="max-h-[150px] mx-auto w-auto rounded-md border-[1px] border-black dark:border-white"
+                                    alt="User upload image"
+                                />
+                            </div>
+                        )}
                     </div>
-                    {backgroundImage && (
-                        <div className="p-1">
+                    {/* <div className="flex overflow-x-auto p-3 items-center snap-x snap-mandatory ">
+                        {exportImage.map((img) => (
                             <img
-                                src={backgroundImage}
-                                className="max-h-[150px] mx-auto w-auto rounded-md border-[1px] border-black dark:border-white"
-                                alt="User upload image"
+                                key={img.filename}
+                                onClick={() => fileInput(img.filename)}
+                                src={require('../image/' + img.filename + '.jpg')}
+                                className={`snap-center hover:opacity-70 hover:rounded-xl hover:p-[1.5px] duration-100 h-[130px] rounded-lg mr-2 cursor-pointer ${
+                                    backgroundImage === img.filename
+                                        ? '!border-[4px] !border-blue-600 !p-[2px] !rounded-xl'
+                                        : ''
+                                }`}
                             />
-                        </div>
-                    )}
+                        ))}
+                    </div> */}
+                    {/* <img src={require(`../image/${backgroundImage}.jpg`)} alt="" /> */}
                     <div className="p-3 mt-2">
                         <button
                             onClick={() => backtodefault()}

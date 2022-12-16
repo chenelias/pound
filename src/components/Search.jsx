@@ -18,15 +18,19 @@ const search = ({ searchengin, background, backgroundImage, setBackgroundImage }
     }
     useEffect(() => {
         if (backgroundImage !== null) {
-            document.querySelector('#searchbody').style.backgroundImage = `url("${backgroundImage}")`
+            document.querySelector('#searchbody').style.backgroundColor = ''
+            document.querySelector(
+                '#backgroundimage'
+            ).style.backgroundImage = `url("http://localhost:3000/static/media/"+${backgroundImage}+".jpg")`
         } else {
         }
     }, [backgroundImage])
+
     useEffect(() => {
         if (background !== '') {
+            document.querySelector('#searchbody').style.backgroundImage = ``
             document.querySelector('#searchbody').style.backgroundColor = background
         } else {
-            document.querySelector('#searchbody').style.backgroundColor = ''
         }
     }, [background])
 
@@ -40,11 +44,14 @@ const search = ({ searchengin, background, backgroundImage, setBackgroundImage }
             className={`absolute items-center mx-auto z-10 dark:bg-[#111] bg-[#f9fafb] dark:text-white text-black h-[100%] w-[100%] justify-center flex`}
         >
             <div
-                className="z-15 absolute h-[100%] w-[100%] justify-center items-center flex"
-                style={{ backgroundImage: `require(/public/images/room2.png)` }}
+                className=" z-15 absolute h-[100%] w-[100%] justify-center items-center flex"
+                id="backgroundimage"
+                // style={{
+                //     backgroundImage: `url("http://localhost:3000/static/media/"+${backgroundImage}+".jpg")`,
+                // }}
             >
                 <div className="!block">
-                    <div className="backdrop-blur-xl rounded-md p-4 items-center mx-auto mb-4 max-w-[500px]  dark:bg-[rgba(17, 17, 17,0.29)] bg-[rgba(249, 250, 251,0.30)]">
+                    <div className="backdrop-blur-xl  rounded-md p-4 items-center mx-auto mb-4 max-w-[500px]  dark:bg-[rgba(17, 17, 17,0.29)] bg-[rgba(249, 250, 251,0.30)]">
                         <Clock
                             className={`font-extrabold xs:text-7xl text-center text-5xl block m-1`}
                             format={'h:mm:ss A'}
@@ -60,7 +67,7 @@ const search = ({ searchengin, background, backgroundImage, setBackgroundImage }
                                         : 'https://duckduckgo.com/'
                                     : searchengin !== 'duckduckgo'
                                     ? `https://www.google.com/search?q=${searchInput}`
-                                    : `https://duckduckgo.com/?q=${searchInput}`
+                                    : `https://duckduckgo.com/search?q=${searchInput}`
                             }
                             className=" outline-none focus:ring-[2px] ring-blue-500 text-2xl absolute ml-2 text-black p-2 rounded-md  dark:text-white"
                         >
